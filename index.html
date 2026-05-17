@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mora Accessories | عجلة الحظ والهدايا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #8fa89b; 
+            --gold-color: #dfba6b; 
+            --dark-gold: #b39247;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle, #a3b8ac 0%, var(--bg-color) 100%);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        header {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 3px solid var(--gold-color);
+            object-fit: cover;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', 'Cairo', serif;
+            margin-top: 15px;
+            font-size: 2rem;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: var(--gold-color);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 360px;
+            height: 360px;
+            margin: 20px auto;
+        }
+
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid var(--gold-color);
+            z-index: 10;
+            filter: drop-shadow(0px 4px 5px rgba(0,0,0,0.3));
+        }
+
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid var(--gold-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            background: #fff;
+            /* تم ضبط وقت الدوران لـ 6 ثوانٍ ليتناسب مع اللفات الكثيرة والممتعة */
+            transition: transform 6s cubic-bezier(0.25, 0.1, 0.1, 1);
+        }
+
+        .spin-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: var(--gold-color);
+            border: 3px solid var(--white);
+            border-radius: 50%;
+            color: var(--text-dark);
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .discount-section {
+            display: none;
+            max-width: 500px;
+            width: 90%;
+            background: var(--white);
+            color: var(--text-dark);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 4px solid var(--gold-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-top: 20px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .discount-section h2 {
+            color: var(--dark-gold);
+            margin-bottom: 10px;
+        }
+
+        .discount-prize {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--bg-color);
+            margin: 15px 0;
+        }
+
+        .catalog-section {
+            display: none;
+            max-width: 800px;
+            width: 95%;
+            margin-top: 30px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .catalog-title {
+            color: var(--gold-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 2px dashed var(--gold-color);
+            padding-bottom: 10px;
+        }
+
+        .catalog-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 10px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .catalog-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gift-card {
+            background: var(--white);
+            color: var(--text-dark);
+            min-width: 260px;
+            max-width: 260px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            scroll-snap-align: center;
+            border: 2px solid var(--gold-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gift-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .gift-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .gift-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1ebd58;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px; height: 10px;
+            position: absolute;
+            animation: fall 3s linear infinite;
+            z-index: 99;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        footer .brand {
+            color: var(--gold-color);
+            font-weight: bold;
+        }
+
+        .dev-reset-btn {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.15);
+            border: none;
+            font-size: 0.75rem;
+            margin-top: 15px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .dev-reset-btn:hover {
+            color: var(--gold-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fall {
+            0% { top: -10px; transform: translateX(0) rotate(0deg); }
+            100% { top: 100vh; transform: translateX(100px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.jpg" alt="Mora Accessories" class="logo">
+        <h1>Mora Accessories</h1>
+        <p class="subtitle" id="pageSubtitle">👑 لفي العجلة واكتشفي عرضك الخاص 👑</p>
+    </header>
+
+    <div class="wheel-container" id="wheelSection">
+        <div class="pointer"></div>
+        <button class="spin-btn" id="spinBtn" onclick="spinWheel()">إبدأ</button>
+        <canvas id="wheelCanvas" width="360" height="360"></canvas>
+    </div>
+
+    <div class="discount-section" id="discountSection">
+        <h2>🎉 مبروك كسبتي عرض حصرى 🎉</h2>
+        <p>العرض الخاص بكِ هو:</p>
+        <div class="discount-prize" id="discountPrizeText"></div>
+        <p style="font-size: 0.9rem; margin-bottom: 20px; color: #7f8c8d;">تواصل الآن مع مورا لتفعيل العرض وتطبيقه على مشترياتك</p>
+        <a href="#" class="whatsapp-btn" id="mainDiscountWaBtn" target="_blank">📳 تفعيل العرض عبر الواتساب</a>
+    </div>
+
+    <div class="catalog-section" id="catalogSection">
+        <h2 class="catalog-title">🎁 كتالوج الهدايا والقطع الراقية 🎁</h2>
+        <p style="margin-bottom: 15px; color: var(--gold-color);">اسحب لليمين واليسار واختاري هديتك المجانية</p>
+        
+        <div class="catalog-slider">
+            <div class="gift-card">
+                <img src="gift1.jpg" alt="قطعة 1" class="gift-img"> 
+                <div class="gift-info">
+                    <div class="gift-name">خاتم ملكي مرصع فخم</div>
+                    <a href="#" class="whatsapp-btn" id="waBtn1" target="_blank">📳 اطلبي هديتك عبر الواتساب</a>
+                </div>
+            </div>
+            <div class="gift-card">
+                <img src="gift2.jpg" alt="قطعة 2" class="gift-img"> 
+                <div class="gift-info">
+                    <div class="gift-name">عقد مرصع بالذهب واللؤلؤ</div>
+                    <a href="#" class="whatsapp-btn" id="waBtn2" target="_blank">📳 اطلبي هديتك عبر الواتساب</a>
+                </div>
+            </div>
+            <div class="gift-card">
+                <img src="gift3.jpg" alt="قطعة 3" class="gift-img"> 
+                <div class="gift-info">
+                    <div class="gift-name">إسورة الماسة الأنيقة</div>
+                    <a href="#" class="whatsapp-btn" id="waBtn3" target="_blank">📳 اطلبي هديتك عبر الواتساب</a>
+                </div>
+            </div>
+            <div class="gift-card">
+                <img src="gift4.jpg" alt="قطعة 4" class="gift-img"> 
+                <div class="gift-info">
+                    <div class="gift-name">أقراط اللوتس الذهبية</div>
+                    <a href="#" class="whatsapp-btn" id="waBtn4" target="_blank">📳 اطلبي هديتك عبر الواتساب</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 جميع الحقوق محفوظة لـ <span class="brand">Mora Accessories</span></p>
+        <button class="dev-reset-btn" onclick="resetForTesting()">[إعادة تعيين للتجربة 🔄]</button>
+    </footer>
+
+    <script>
+        const prizes = [
+            "خصم 5%", 
+            "اشتري | قطعتين + قطعة هدية", 
+            "اختار هديتك",
+            "خصم 10%"
+        ];
+        
+        const colors = ["#8fa89b", "#dfba6b", "#7b9487", "#cfad5e"];
+        const whatsappNumber = "201212286516"; 
+        
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        const numSegments = prizes.length;
+        const anglePerSegment = (2 * Math.PI) / numSegments;
+        let isSpinning = false;
+
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * anglePerSegment;
+                const endAngle = startAngle + anglePerSegment;
+                
+                ctx.beginPath();
+                ctx.moveTo(180, 180);
+                ctx.arc(180, 180, 170, startAngle, endAngle);
+                ctx.fillStyle = colors[i];
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "rgba(255,255,255,0.4)";
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(180, 180);
+                ctx.rotate(startAngle + anglePerSegment / 2);
+                ctx.textAlign = "center";
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 15px Cairo";
+                ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+                ctx.shadowBlur = 4;
+
+                if (prizes[i].includes(" | ")) {
+                    const lines = prizes[i].split(" | ");
+                    ctx.fillText(lines[0], 115, -7);
+                    ctx.font = "bold 12px Cairo";
+                    ctx.fillText(lines[1], 105, 12);
+                } else {
+                    ctx.font = "bold 16px Cairo";
+                    ctx.fillText(prizes[i], 105, 5);
+                }
+                
+                ctx.restore();
+            }
+        }
+        drawWheel();
+
+        window.onload = function() {
+            const savedPrize = localStorage.getItem("mora_user_prize");
+            if (savedPrize) {
+                redirectUserToPrize(savedPrize);
+            }
+        };
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            
+            const prizeIndex = Math.floor(Math.random() * numSegments);
+            const wonPrize = prizes[prizeIndex];
+
+            localStorage.setItem("mora_user_prize", wonPrize);
+
+            // تعديل مينا الحماسي: جعل اللفات عشوائية وكثيرة بين 7 و 10 لفات كاملة لتشويق العميل
+            const randomFullSpins = Math.floor(Math.random() * 4) + 7; 
+            const degreesPerSegment = 360 / numSegments;
+            
+            const randomOffsetInsideSegment = (Math.random() * (degreesPerSegment - 12)) + 6;
+            const targetAngle = 270 - (prizeIndex * degreesPerSegment) - randomOffsetInsideSegment;
+            const totalRotation = (randomFullSpins * 360) + targetAngle;
+
+            document.getElementById("wheelCanvas").style.transform = `rotate(${totalRotation}deg)`;
+
+            // تم رفع الوقت لـ 6 ثوانٍ (6000 مللي ثانية) ليتطابق مع حركة اللف الطويلة والانسيابية
+            setTimeout(() => {
+                createConfetti(); 
+                redirectUserToPrize(wonPrize);
+            }, 6000);
+        }
+
+        function redirectUserToPrize(prize) {
+            document.getElementById("wheelSection").style.display = "none";
+            document.getElementById("pageSubtitle").innerText = "🎁 تم تسجيل عرضك الخاص بنجاح 🎁";
+
+            if (prize === "اختار هديتك") {
+                document.getElementById("catalogSection").style.display = "block";
+                document.getElementById("discountSection").style.display = "none";
+                
+                for (let i = 1; i <= 4; i++) {
+                    let giftName = document.querySelectorAll(".gift-name")[i-1].innerText;
+                    let customMessage = `أهلاً مورا ✨، أنا لفيت عجلة الحظ وكسبت عرض (اختار هديتك) 🎁 وعاوزة أختار الهدية دي: ${giftName}`;
+                    document.getElementById(`waBtn${i}`).href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(customMessage)}`;
+                }
+            } else {
+                document.getElementById("discountSection").style.display = "block";
+                document.getElementById("catalogSection").style.display = "none";
+                
+                let displayPrize = prize.replace(" | ", " ");
+                if(prize.includes("قطعتين")) {
+                    displayPrize = "اشتري قطعتين والـ 3 هدية 🎉";
+                }
+                
+                document.getElementById("discountPrizeText").innerText = displayPrize;
+                
+                let mainMessage = `أهلاً مورا ✨، أنا لفيت عجلة الحظ في الموقع وكسبت عرض حصرى وهو: (${displayPrize}) وعاوزة أفعله واستفيد بيه لشراء قطع من عندك 👑`;
+                document.getElementById("mainDiscountWaBtn").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mainMessage)}`;
+            }
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+                confetti.style.top = "-10px";
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function resetForTesting() {
+            const password = prompt("من فضلك أدخل كلمة مرور المطور لإعادة تعيين التجربة:");
+            if (password === "mora2026") {
+                localStorage.removeItem("mora_user_prize");
+                window.location.reload();
+            } else if (password !== null) {
+                alert("عذراً، كلمة المرور غير صحيحة!");
+            }
+        }
+    </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
